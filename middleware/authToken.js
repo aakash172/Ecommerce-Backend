@@ -4,7 +4,7 @@ async function authToken(req, res, next) {
     const token = req.cookies?.token;
 
     if (!token) {
-      return res.json({
+      return res.status(200).json({
         message: "User not login",
         error: true,
         success: false,
@@ -17,7 +17,7 @@ async function authToken(req, res, next) {
 
       if (err) {
         console.log("Error in Auth : ", err);
-        req.user.id = decoded?._id;
+        req.userId = decoded?._id;
       }
       next();
     });

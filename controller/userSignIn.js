@@ -27,8 +27,9 @@ async function userSignInController(req, res) {
       });
       const tokenOption = {
         httpOnly: true,
-        secure: true,
+        secure: false,
       };
+      console.log("Akash 2 :" + token);
       res.cookie("token", token, tokenOption).json({
         message: "Login Successfully",
         data: token,

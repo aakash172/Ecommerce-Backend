@@ -14,8 +14,9 @@ app.use(
 );
 
 app.use(express.json());
+app.use(cookieParser());
 app.use("/api", router);
-app.use(cookieParser);
+
 const port = 8080 || process.env.PORT;
 
 connectDB()
@@ -26,5 +27,5 @@ connectDB()
     });
   })
   .catch((err) => {
-    console.log("this" + err);
+    console.log("Error Ocurred" + err);
   });

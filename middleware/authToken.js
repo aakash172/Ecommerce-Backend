@@ -2,6 +2,7 @@ let jwt = require("jsonwebtoken");
 async function authToken(req, res, next) {
   try {
     const token = req.cookies?.token;
+    console.log("Akas" + token);
 
     if (!token) {
       return res.status(200).json({
@@ -19,9 +20,8 @@ async function authToken(req, res, next) {
         console.log("Error in Auth : ", err);
         req.userId = decoded?._id;
       }
-      next();
     });
-    console.log("token :", token);
+    next();
   } catch (err) {
     res.status(400).json({
       success: false,

@@ -5,7 +5,7 @@ async function authToken(req, res, next) {
     console.log("Akas" + token);
 
     if (!token) {
-      return res.status(200).json({
+      return res.status(401).json({
         message: "User not login",
         error: true,
         success: false,
@@ -13,15 +13,12 @@ async function authToken(req, res, next) {
     }
 
     jwt.verify(token, process.env.TOKEN_SECRET_KEY, function (err, decoded) {
-      console.log("Err :", err);
-      console.log("Decoded :", decoded);
-
       if (err) {
         console.log("Error in Auth : ", err);
-        req.userId = decoded?._id;
       }
+      req.userId = decoded?._id;
+      next();
     });
-    next();
   } catch (err) {
     res.status(400).json({
       success: false,

@@ -41,7 +41,9 @@ async function userSignInController(req, res) {
     }
   } catch (err) {
     res.status(401).json({
-      message: err.message,
+      message: err.message || err,
+      error: true,
+      success: false,
     });
   }
 }

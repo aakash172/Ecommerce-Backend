@@ -21,11 +21,15 @@ const port = 8080 || process.env.PORT;
 
 connectDB()
   .then(() => {
-    app.listen(port, () => {
-      console.log("connecting to DB");
-      console.log("server is running");
+    app.listen(port, (err) => {
+      if (err) {
+        console.log("Error occurred while starting the server: " + err);
+      } else {
+        console.log("Successfully connected to DB");
+        console.log("Server is running on port " + port);
+      }
     });
   })
   .catch((err) => {
-    console.log("Error Ocurred" + err);
+    console.log("Error occurred while connecting to the DB: " + err);
   });

@@ -16,7 +16,7 @@ async function userSignInController(req, res) {
       throw new Error("User not registered");
     }
     const checkPassword = await bcrypt.compareSync(password, userData.password);
-    console.log("password", checkPassword);
+  
     if (checkPassword) {
       const tokenData = {
         _id: userData._id,
@@ -29,7 +29,7 @@ async function userSignInController(req, res) {
         httpOnly: true,
         secure: false,
       };
-      console.log("Akash 2 :" + token);
+     
       res.cookie("token", token, tokenOption).json({
         message: "Login Successfully",
         data: token,

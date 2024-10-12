@@ -1,6 +1,6 @@
 const productModel = require("../../models/productModel");
 
-async function getCategoryProduct(req, res) {
+async function getCategoryProductOne(req, res) {
   try {
     const productCategory = await productModel.distinct("category");
 
@@ -27,4 +27,4 @@ async function getCategoryProduct(req, res) {
   }
 }
 
-module.exports = getCategoryProduct;
+module.exports = getCategoryProductOne;

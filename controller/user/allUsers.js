@@ -10,7 +10,7 @@ async function allUsers(req, res) {
       success: true,
     });
   } catch (err) {
-    res.json({
+    res.status(400).json({
       message: err.message,
       error: true,
       success: false,

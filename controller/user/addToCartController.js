@@ -19,7 +19,7 @@ const addToCartController = async (req, res) => {
     };
     const newToCart = new addToCartModel(payload);
     const saveProduct = await newToCart.save();
-    res.status(200).json({
+    return res.status(200).json({
       message: "Product Add to cart",
       error: false,
       success: true,

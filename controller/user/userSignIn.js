@@ -16,7 +16,7 @@ async function userSignInController(req, res) {
       throw new Error("User not registered");
     }
     const checkPassword = await bcrypt.compareSync(password, userData.password);
-  
+
     if (checkPassword) {
       const tokenData = {
         _id: userData._id,
@@ -27,9 +27,10 @@ async function userSignInController(req, res) {
       });
       const tokenOption = {
         httpOnly: true,
-        secure: false,
+        secure: true,
+        sameSite: "None",
       };
-     
+
       res.cookie("token", token, tokenOption).json({
         message: "Login Successfully",
         data: token,

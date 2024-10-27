@@ -13,7 +13,7 @@ async function getLineItems(lineItems) {
       const productData = {
         productId: productId,
         name: product.name,
-        price: product.price.unit_amount / 100,
+        price: item.price.unit_amount / 100,
         quantity: item.quantity,
         image: product.images,
       };
@@ -32,10 +32,16 @@ const webhooks = async (req, res) => {
   });
   let event;
   try {
-    event = stripe.webhooks.constructEvent(req.body, header, endpointsecret);
+    event = stripe.webhooks.constructEvent(
+      payloadString,
+      header,
+      endpointsecret
+    );
+    console.log("akash", event);
   } catch (err) {
-    res.status(400).send(`WebHook Error:${err.message}`);
+    return res.status(400).send(`WebHook Error:${err.message}`);
   }
+
   switch (event.type) {
     case "checkout.session.completed":
       const session = event.data.object;
@@ -58,7 +64,7 @@ const webhooks = async (req, res) => {
         totalAmout: session.amount_total / 100,
       };
       const order = new orderModel(orderDetails);
-      const saveOrder = order.save();
+      const saveOrder = await order.save();
       if (saveOrder?._id) {
         const deleteCartItem = await addToCartModel.deleteMany({
           userId: session.metadata.userId,

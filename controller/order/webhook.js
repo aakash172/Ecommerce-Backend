@@ -1,5 +1,6 @@
 const stripe = require("../../config/stripe.js");
 const orderModel = require("../../models/orderProductModel.js");
+const addToCartModel = require("../../models/cartProducts.js");
 const endpointsecret = process.env.STRIPE_ENDPOINT_WEBHOOK_SECRET_KEY;
 
 async function getLineItems(lineItems) {
@@ -58,6 +59,11 @@ const webhooks = async (req, res) => {
       };
       const order = new orderModel(orderDetails);
       const saveOrder = order.save();
+      if (saveOrder?._id) {
+        const deleteCartItem = await addToCartModel.deleteMany({
+          userId: session.metadata.userId,
+        });
+      }
       break;
     default:
       console.log(`Unhandled Event Type ${event.type}`);
